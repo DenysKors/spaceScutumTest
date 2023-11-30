@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchAllTodos } from "./todosThunk";
 
 const todosInitialState = {
-	allTodos: null,
-	totalAmount: null,
+	allTodos: [],
+	totalAmount: 0,
 };
 
 const todosSlice = createSlice({

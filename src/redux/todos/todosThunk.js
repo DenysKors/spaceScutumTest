@@ -11,7 +11,7 @@ const instance = axios.create({
 
 export const fetchAllTodos = createAsyncThunk("todos/fetchAll", async (_, thunkApi) => {
 	try {
-		const { data } = await instance.get("/todos");
+		const { data } = await instance.get("/todos?limit=0");
 		return data;
 	} catch (error) {
 		console.log(error);
