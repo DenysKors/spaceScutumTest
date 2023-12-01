@@ -20,3 +20,18 @@ export const fetchAllTodos = createAsyncThunk("todos/fetchAll", async (_, thunkA
 		return thunkApi.rejectWithValue(error.message);
 	}
 });
+
+export const completeTodo = createAsyncThunk("todos/completeTodo", async (todoId, thunkApi) => {
+	try {
+		const { data } = await instance.put(`/todos/${todoId}`, {
+			completed: true,
+		});
+		toast.success("Congratulations! Todo completed!");
+		return data;
+	} catch (error) {
+		console.log(error);
+		toast.error("Connection failed, please try again");
+
+		return thunkApi.rejectWithValue(error.message);
+	}
+});

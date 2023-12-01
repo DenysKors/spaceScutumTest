@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchAllTodos } from "./todosThunk";
+import { fetchAllTodos, completeTodo } from "./todosThunk";
 
 const todosInitialState = {
 	allTodos: [],
@@ -19,6 +19,10 @@ const todosSlice = createSlice({
 			.addCase(fetchAllTodos.rejected, state => {
 				state.allTodos = null;
 				state.totalAmount = null;
+			})
+			.addCase(completeTodo.fulfilled, (state, { payload }) => {
+				const index = state.allTodos.findIndex(todo => todo.id === payload.id);
+				state.allTodos.splice(index, 1, payload);
 			});
 	},
 });

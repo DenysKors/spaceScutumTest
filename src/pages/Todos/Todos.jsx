@@ -52,7 +52,7 @@ function Todos() {
 				<List>
 					{todos?.length > 0 ? currentTodos.map(todo => <TodoItem key={todo.id} todo={todo} />) : <p>Nothing found</p>}
 				</List>
-				{todos?.length > 0 && (
+				{currentTodos.length > 0 && (
 					<Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
 						<Pagination count={amountOfPages} page={page} onChange={handleChange} variant="outlined" color="primary" />
 					</Box>
