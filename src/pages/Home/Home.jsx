@@ -1,13 +1,16 @@
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { useSelector } from "react-redux";
-import { selectTotalAmount, selectTodosCount } from "../../redux/todos/selectors";
+import { selectTotalAmount, selectTodosCount, selectIsLoading } from "../../redux/todos/selectors";
 
 function Home() {
 	const { active } = useSelector(selectTodosCount);
 	const totalTodos = useSelector(selectTotalAmount);
+	const isLoading = useSelector(selectIsLoading);
+
 	return (
 		<>
 			<Toolbar />
@@ -17,17 +20,21 @@ function Home() {
 						Welcome to TodosApp!
 					</Typography>
 				</Box>
-				<Box component="section">
-					<Typography
-						align="center"
-						variant="subtitle1"
-						sx={{ mb: 3 }}
-					>{`Your total amoun of todos is ${totalTodos}`}</Typography>
-					<Typography
-						align="center"
-						variant="subtitle1"
-					>{`Now you have ${active} active todos, so lets complete them all !`}</Typography>
-				</Box>
+				{isLoading ? (
+					<CircularProgress />
+				) : (
+					<Box component="section">
+						<Typography
+							align="center"
+							variant="subtitle1"
+							sx={{ mb: 3 }}
+						>{`Your total amoun of todos is ${totalTodos}`}</Typography>
+						<Typography
+							align="center"
+							variant="subtitle1"
+						>{`Now you have ${active} active todos, so lets complete them all !`}</Typography>
+					</Box>
+				)}
 			</Box>
 		</>
 	);

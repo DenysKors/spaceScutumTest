@@ -4,6 +4,8 @@ export const selectTodos = state => state.todos.allTodos;
 
 export const selectTotalAmount = state => state.todos.totalAmount;
 
+export const selectIsLoading = state => state.todos.isLoading;
+
 export const selectFilterStatus = state => state.filter.status;
 
 export const selectTodosCount = createSelector([selectTodos], allTodos => {
