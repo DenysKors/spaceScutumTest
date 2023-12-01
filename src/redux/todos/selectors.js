@@ -4,6 +4,8 @@ export const selectTodos = state => state.todos.allTodos;
 
 export const selectTotalAmount = state => state.todos.totalAmount;
 
+export const selectFilterStatus = state => state.filter.status;
+
 export const selectTodosCount = createSelector([selectTodos], allTodos => {
 	return allTodos.reduce(
 		(count, todo) => {
@@ -16,4 +18,14 @@ export const selectTodosCount = createSelector([selectTodos], allTodos => {
 		},
 		{ active: 0, completed: 0 },
 	);
+});
+
+export const selectVisibleTodos = createSelector([selectTodos, selectFilterStatus], (allTodos, filterStatus) => {
+	if (filterStatus === "active") {
+		return allTodos.filter(todo => !todo.completed);
+	} else if (filterStatus === "completed") {
+		return allTodos.filter(todo => todo.completed);
+	} else {
+		return allTodos;
+	}
 });

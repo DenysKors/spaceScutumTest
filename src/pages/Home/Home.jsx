@@ -22,7 +22,7 @@ function Home() {
 						align="center"
 						variant="subtitle1"
 						sx={{ mb: 3 }}
-					>{`Your total amoun of todos is ${totalTodos}.`}</Typography>
+					>{`Your total amoun of todos is ${totalTodos}`}</Typography>
 					<Typography
 						align="center"
 						variant="subtitle1"
