@@ -4,9 +4,11 @@ Welcome to **TodoApp** project!
 
 This project base on React+Vite.
 
-All styles and components are from Material UI React component library.
+Material UI React component library used to create responsive and user-friendly design.
 
-Project using fake REST API of JSON data <a href="https://dummyjson.com/docs/todos">DummyJSON</a>
+Project using fake REST API of JSON data <a href="https://dummyjson.com/docs/todos">DummyJSON</a>.
+
+That's why I add some code tricks for the app to work properly.
 
 **Installation and launch**:
 
