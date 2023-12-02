@@ -11,7 +11,7 @@ import { TodoCounter } from "../../components/TodoCounter/TodoCounter";
 import { TodoItem } from "../../components/TodoItem/TodoItem";
 import { StatusFilter } from "../../components/StatusFilter/StatusFilter";
 import { selectVisibleTodos } from "../../redux/todos/selectors";
-import { deleteTodo } from "../../redux/todos/todosThunk";
+import { deleteTodo, completeTodo } from "../../redux/todos/todosThunk";
 
 const todosPerPage = 10;
 
@@ -34,6 +34,14 @@ function Todos() {
 	const handleChange = (_, value) => {
 		setPage(value);
 		setItem(value * todosPerPage - todosPerPage);
+	};
+
+	const handleComplete = todoId => {
+		if (currentTodos.length === 1) {
+			setItem(prevState => prevState - 10);
+			setPage(prevState => prevState - 1);
+		}
+		dispatch(completeTodo(todoId));
 	};
 
 	const handleDelete = todoId => {
@@ -61,7 +69,9 @@ function Todos() {
 				</Box>
 				<List>
 					{todos?.length > 0 ? (
-						currentTodos.map(todo => <TodoItem key={todo.id} todo={todo} onDelete={handleDelete} />)
+						currentTodos.map(todo => (
+							<TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onComplete={handleComplete} />
+						))
 					) : (
 						<p>Nothing found</p>
 					)}

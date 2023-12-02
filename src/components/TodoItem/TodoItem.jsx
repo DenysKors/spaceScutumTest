@@ -4,15 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { useDispatch } from "react-redux";
-
-import { completeTodo } from "../../redux/todos/todosThunk";
-
-export const TodoItem = ({ todo, onDelete }) => {
-	const dispatch = useDispatch();
-
-	const handleComplete = () => dispatch(completeTodo(todo.id));
-
+export const TodoItem = ({ todo, onDelete, onComplete }) => {
 	return (
 		<ListItem disablePadding divider={true}>
 			<Checkbox
@@ -20,7 +12,7 @@ export const TodoItem = ({ todo, onDelete }) => {
 				checked={todo.completed}
 				disabled={todo.completed}
 				disableRipple
-				onChange={handleComplete}
+				onChange={() => onComplete(todo.id)}
 			/>
 
 			<ListItemText primary={todo.todo} />
