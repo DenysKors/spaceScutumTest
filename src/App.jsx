@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 import Home from "./pages/Home/Home";
 import Todos from "./pages/Todos/Todos";
+import AddTodo from "./pages/AddTodo/AddTodo";
 import Layout from "./components/Layout/Layout";
 
 import { fetchAllTodos } from "./redux/todos/todosThunk";
@@ -22,6 +23,7 @@ function App() {
 				<Route path="/" element={<Layout />}>
 					<Route index element={<Home />} />
 					<Route path="todos" element={<Todos />} />
+					<Route path="add-todo" element={<AddTodo />} />
 				</Route>
 				<Route path="*" element={<Navigate to="/" />} />
 			</Routes>

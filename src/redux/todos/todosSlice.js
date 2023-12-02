@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchAllTodos, completeTodo, deleteTodo } from "./todosThunk";
+import { fetchAllTodos, completeTodo, deleteTodo, addTodo } from "./todosThunk";
 
 const todosInitialState = {
 	allTodos: [],
@@ -26,6 +26,9 @@ const todosSlice = createSlice({
 			.addCase(completeTodo.fulfilled, (state, { payload }) => {
 				const index = state.allTodos.findIndex(todo => todo.id === payload.id);
 				state.allTodos.splice(index, 1, payload);
+			})
+			.addCase(addTodo.fulfilled, (state, { payload }) => {
+				state.allTodos.push(payload);
 			})
 			.addCase(deleteTodo.fulfilled, (state, { payload }) => {
 				const index = state.allTodos.findIndex(todo => todo.id === payload.id);

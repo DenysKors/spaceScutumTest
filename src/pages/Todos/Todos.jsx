@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Pagination from "@mui/material/Pagination";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
@@ -10,7 +11,7 @@ import { useState, useEffect } from "react";
 import { TodoCounter } from "../../components/TodoCounter/TodoCounter";
 import { TodoItem } from "../../components/TodoItem/TodoItem";
 import { StatusFilter } from "../../components/StatusFilter/StatusFilter";
-import { selectVisibleTodos } from "../../redux/todos/selectors";
+import { selectVisibleTodos, selectIsLoading } from "../../redux/todos/selectors";
 import { deleteTodo, completeTodo } from "../../redux/todos/todosThunk";
 
 const todosPerPage = 10;
@@ -22,6 +23,7 @@ function Todos() {
 
 	const dispatch = useDispatch();
 	const todos = useSelector(selectVisibleTodos);
+	const isLoading = useSelector(selectIsLoading);
 
 	const amountOfPages = Math.ceil(todos.length / todosPerPage);
 
@@ -56,30 +58,42 @@ function Todos() {
 		<>
 			<Toolbar />
 			<Container component="main" maxWidth="lg" sx={{ p: 3 }}>
-				<Box
-					sx={{
-						display: "flex",
-						flexWrap: "wrap",
-						alignItems: "flex-end",
-						justifyContent: { xs: "space-around", sm: "space-between" },
-					}}
-				>
-					<TodoCounter />
-					<StatusFilter />
-				</Box>
-				<List>
-					{todos?.length > 0 ? (
-						currentTodos.map(todo => (
-							<TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onComplete={handleComplete} />
-						))
-					) : (
-						<p>Nothing found</p>
-					)}
-				</List>
-				{currentTodos.length > 0 && (
-					<Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
-						<Pagination count={amountOfPages} page={page} onChange={handleChange} variant="outlined" color="primary" />
-					</Box>
+				{isLoading ? (
+					<CircularProgress />
+				) : (
+					<>
+						<Box
+							sx={{
+								display: "flex",
+								flexWrap: "wrap",
+								alignItems: "flex-end",
+								justifyContent: { xs: "space-around", sm: "space-between" },
+							}}
+						>
+							<TodoCounter />
+							<StatusFilter />
+						</Box>
+						<List>
+							{todos?.length > 0 ? (
+								currentTodos.map(todo => (
+									<TodoItem key={todo.id} todo={todo} onDelete={handleDelete} onComplete={handleComplete} />
+								))
+							) : (
+								<p>Nothing found</p>
+							)}
+						</List>
+						{currentTodos.length > 0 && (
+							<Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+								<Pagination
+									count={amountOfPages}
+									page={page}
+									onChange={handleChange}
+									variant="outlined"
+									color="primary"
+								/>
+							</Box>
+						)}
+					</>
 				)}
 			</Container>
 		</>

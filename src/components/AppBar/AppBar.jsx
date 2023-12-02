@@ -15,12 +15,16 @@ function RespAppBar() {
 		<Box sx={{ display: "flex" }}>
 			<AppBar component="nav">
 				<Toolbar>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: { xs: "0.875rem", sm: "1.25rem" } }}>
 						TodosApp
 					</Typography>
 					<Box>
 						{pages.map(({ page, path }) => (
-							<Button key={page} sx={{ color: "#fff" }} onClick={() => navigate(`${path}`)}>
+							<Button
+								key={page}
+								sx={{ color: "#fff", fontSize: { xs: "0.625rem", sm: "0.875rem" } }}
+								onClick={() => navigate(`${path}`)}
+							>
 								{page}
 							</Button>
 						))}

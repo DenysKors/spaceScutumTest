@@ -36,6 +36,19 @@ export const completeTodo = createAsyncThunk("todos/completeTodo", async (todoId
 	}
 });
 
+export const addTodo = createAsyncThunk("todos/addTodo", async (todo, thunkApi) => {
+	try {
+		const { data } = await instance.post("/todos/add", todo);
+		toast.success("New Todo added!");
+		return data;
+	} catch (error) {
+		console.log(error);
+		toast.error("Connection failed, please try again");
+
+		return thunkApi.rejectWithValue(error.message);
+	}
+});
+
 export const deleteTodo = createAsyncThunk("todos/deleteTodo", async (todoId, thunkApi) => {
 	try {
 		const { data } = await instance.delete(`/todos/${todoId}`);
