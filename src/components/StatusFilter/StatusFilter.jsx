@@ -1,16 +1,12 @@
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { selectFilterStatus } from "../../redux/todos/selectors";
-import { setFilterStatus } from "../../redux/todos/filterSlice";
 
-export const StatusFilter = () => {
-	const dispatch = useDispatch();
+export const StatusFilter = ({ onChangeFilter }) => {
 	const filter = useSelector(selectFilterStatus);
-
-	const handleChange = (_, newfilter) => dispatch(setFilterStatus(newfilter));
 
 	return (
 		<ToggleButtonGroup
@@ -18,7 +14,7 @@ export const StatusFilter = () => {
 			color="primary"
 			value={filter}
 			exclusive
-			onChange={handleChange}
+			onChange={onChangeFilter}
 			aria-label="Filter todos"
 		>
 			<ToggleButton value="all">All</ToggleButton>

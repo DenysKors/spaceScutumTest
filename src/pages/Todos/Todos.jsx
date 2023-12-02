@@ -13,6 +13,7 @@ import { TodoItem } from "../../components/TodoItem/TodoItem";
 import { StatusFilter } from "../../components/StatusFilter/StatusFilter";
 import { selectVisibleTodos, selectIsLoading } from "../../redux/todos/selectors";
 import { deleteTodo, completeTodo } from "../../redux/todos/todosThunk";
+import { setFilterStatus } from "../../redux/todos/filterSlice";
 
 const todosPerPage = 10;
 
@@ -33,9 +34,15 @@ function Todos() {
 		setCurrentTodos(paginationItems);
 	}, [todos, item]);
 
-	const handleChange = (_, value) => {
+	const handleChangePage = (_, value) => {
 		setPage(value);
 		setItem(value * todosPerPage - todosPerPage);
+	};
+
+	const handleChangeFilter = (_, newfilter) => {
+		dispatch(setFilterStatus(newfilter));
+		setPage(1);
+		setItem(0);
 	};
 
 	const handleComplete = todoId => {
@@ -71,7 +78,7 @@ function Todos() {
 							}}
 						>
 							<TodoCounter />
-							<StatusFilter />
+							<StatusFilter onChangeFilter={handleChangeFilter} />
 						</Box>
 						<List>
 							{todos?.length > 0 ? (
@@ -87,7 +94,7 @@ function Todos() {
 								<Pagination
 									count={amountOfPages}
 									page={page}
-									onChange={handleChange}
+									onChange={handleChangePage}
 									variant="outlined"
 									color="primary"
 								/>
