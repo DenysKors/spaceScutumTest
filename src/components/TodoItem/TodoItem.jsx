@@ -6,14 +6,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useDispatch } from "react-redux";
 
-import { completeTodo, deleteTodo } from "../../redux/todos/todosThunk";
+import { completeTodo } from "../../redux/todos/todosThunk";
 
-export const TodoItem = ({ todo }) => {
+export const TodoItem = ({ todo, onDelete }) => {
 	const dispatch = useDispatch();
 
 	const handleComplete = () => dispatch(completeTodo(todo.id));
-
-	const handleDelete = () => dispatch(deleteTodo(todo.id));
 
 	return (
 		<ListItem disablePadding divider={true}>
@@ -27,7 +25,7 @@ export const TodoItem = ({ todo }) => {
 
 			<ListItemText primary={todo.todo} />
 			{!todo.completed && (
-				<IconButton edge="end" aria-label="delete" onClick={handleDelete}>
+				<IconButton edge="end" aria-label="delete" onClick={() => onDelete(todo.id)}>
 					<DeleteIcon />
 				</IconButton>
 			)}

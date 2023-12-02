@@ -4,11 +4,11 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useSelector } from "react-redux";
-import { selectTotalAmount, selectTodosCount, selectIsLoading } from "../../redux/todos/selectors";
+import { selectTodos, selectTodosCount, selectIsLoading } from "../../redux/todos/selectors";
 
 function Home() {
 	const { active } = useSelector(selectTodosCount);
-	const totalTodos = useSelector(selectTotalAmount);
+	const totalTodos = useSelector(selectTodos);
 	const isLoading = useSelector(selectIsLoading);
 
 	return (
@@ -28,7 +28,7 @@ function Home() {
 							align="center"
 							variant="subtitle1"
 							sx={{ mb: 3 }}
-						>{`Your total amoun of todos is ${totalTodos}`}</Typography>
+						>{`Your total amoun of todos is ${totalTodos.length}`}</Typography>
 						<Typography
 							align="center"
 							variant="subtitle1"

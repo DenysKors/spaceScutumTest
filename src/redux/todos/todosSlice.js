@@ -4,7 +4,6 @@ import { fetchAllTodos, completeTodo, deleteTodo } from "./todosThunk";
 
 const todosInitialState = {
 	allTodos: [],
-	totalAmount: 0,
 	isLoading: false,
 };
 
@@ -18,12 +17,10 @@ const todosSlice = createSlice({
 			})
 			.addCase(fetchAllTodos.fulfilled, (state, { payload }) => {
 				state.allTodos = payload.todos;
-				state.totalAmount = payload.total;
 				state.isLoading = false;
 			})
 			.addCase(fetchAllTodos.rejected, state => {
 				state.allTodos = null;
-				state.totalAmount = null;
 				state.isLoading = false;
 			})
 			.addCase(completeTodo.fulfilled, (state, { payload }) => {

@@ -4,13 +4,14 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Pagination from "@mui/material/Pagination";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
 import { TodoCounter } from "../../components/TodoCounter/TodoCounter";
 import { TodoItem } from "../../components/TodoItem/TodoItem";
 import { StatusFilter } from "../../components/StatusFilter/StatusFilter";
 import { selectVisibleTodos } from "../../redux/todos/selectors";
+import { deleteTodo } from "../../redux/todos/todosThunk";
 
 const todosPerPage = 10;
 
@@ -19,6 +20,7 @@ function Todos() {
 	const [item, setItem] = useState(0);
 	const [currentTodos, setCurrentTodos] = useState([]);
 
+	const dispatch = useDispatch();
 	const todos = useSelector(selectVisibleTodos);
 
 	const amountOfPages = Math.ceil(todos.length / todosPerPage);
@@ -32,6 +34,14 @@ function Todos() {
 	const handleChange = (_, value) => {
 		setPage(value);
 		setItem(value * todosPerPage - todosPerPage);
+	};
+
+	const handleDelete = todoId => {
+		if (currentTodos.length === 1) {
+			setItem(prevState => prevState - 10);
+			setPage(prevState => prevState - 1);
+		}
+		dispatch(deleteTodo(todoId));
 	};
 
 	return (
@@ -50,7 +60,11 @@ function Todos() {
 					<StatusFilter />
 				</Box>
 				<List>
-					{todos?.length > 0 ? currentTodos.map(todo => <TodoItem key={todo.id} todo={todo} />) : <p>Nothing found</p>}
+					{todos?.length > 0 ? (
+						currentTodos.map(todo => <TodoItem key={todo.id} todo={todo} onDelete={handleDelete} />)
+					) : (
+						<p>Nothing found</p>
+					)}
 				</List>
 				{currentTodos.length > 0 && (
 					<Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
