@@ -46,7 +46,7 @@ function Todos() {
 	};
 
 	const handleComplete = todoId => {
-		if (currentTodos.length === 1) {
+		if (currentTodos.length === 1 && todos.length > 1) {
 			setItem(prevState => prevState - 10);
 			setPage(prevState => prevState - 1);
 		}
@@ -54,7 +54,7 @@ function Todos() {
 	};
 
 	const handleDelete = todoId => {
-		if (currentTodos.length === 1) {
+		if (currentTodos.length === 1 && todos.length > 1) {
 			setItem(prevState => prevState - 10);
 			setPage(prevState => prevState - 1);
 		}
