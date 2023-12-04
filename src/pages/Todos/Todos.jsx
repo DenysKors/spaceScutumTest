@@ -4,9 +4,10 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Pagination from "@mui/material/Pagination";
 import CircularProgress from "@mui/material/CircularProgress";
+import Confetti from "react-confetti";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { TodoCounter } from "../../components/TodoCounter/TodoCounter";
 import { TodoItem } from "../../components/TodoItem/TodoItem";
@@ -16,11 +17,14 @@ import { deleteTodo, completeTodo } from "../../redux/todos/todosThunk";
 import { setFilterStatus } from "../../redux/todos/filterSlice";
 
 const todosPerPage = 10;
+const CONFETTI_DURATION = 2500;
 
 function Todos() {
 	const [page, setPage] = useState(1);
 	const [item, setItem] = useState(0);
+	const [isConfetti, setIsConfetti] = useState(false);
 	const [currentTodos, setCurrentTodos] = useState([]);
+	const timeoutId = useRef(null);
 
 	const dispatch = useDispatch();
 	const todos = useSelector(selectVisibleTodos);
@@ -34,6 +38,20 @@ function Todos() {
 		setCurrentTodos(paginationItems);
 	}, [todos, item]);
 
+	useEffect(() => {
+		if (isConfetti) {
+			timeoutId.current = setTimeout(() => {
+				setIsConfetti(false);
+			}, CONFETTI_DURATION);
+		}
+
+		return () => {
+			if (timeoutId.current) {
+				clearTimeout(timeoutId.current);
+			}
+		};
+	}, [isConfetti]);
+
 	const handleChangePage = (_, value) => {
 		setPage(value);
 		setItem(value * todosPerPage - todosPerPage);
@@ -46,6 +64,7 @@ function Todos() {
 	};
 
 	const handleComplete = todoId => {
+		setIsConfetti(true);
 		if (currentTodos.length === 1 && todos.length > 1) {
 			setItem(prevState => prevState - 10);
 			setPage(prevState => prevState - 1);
@@ -64,6 +83,7 @@ function Todos() {
 	return (
 		<>
 			<Toolbar />
+			{isConfetti && <Confetti run={true} recycle={false} gravity={0.3} tweenDuration={1000} />}
 			<Container component="main" maxWidth="lg" sx={{ p: 3 }}>
 				{isLoading ? (
 					<CircularProgress />
