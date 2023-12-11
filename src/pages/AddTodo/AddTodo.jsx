@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
+import toast from "react-hot-toast";
 
 import { useDispatch } from "react-redux";
 
@@ -13,13 +14,18 @@ function AddTodo() {
 
 	const handleSubmit = evt => {
 		evt.preventDefault();
+
 		const data = new FormData(evt.currentTarget);
 		const todoText = data.get("todo");
+
+		if (todoText.trim() === "") return toast.error("Please fill todo");
+
 		const newTodo = {
-			todo: todoText,
+			todo: todoText.trim(),
 			completed: false,
 			userId: 51,
 		};
+
 		dispatch(addTodo(newTodo));
 		evt.target.reset();
 	};
